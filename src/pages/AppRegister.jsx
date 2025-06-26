@@ -1,8 +1,9 @@
 import { useState } from "react";
 import MyInput from "../components/ui/MyInput";
 import { useDispatch, useSelector } from "react-redux";
-import { registerFailure, registerStart, registerSuccess } from "../slice/auth";
+import { authFailure, authStart, authSuccess } from "../slice/auth";
 import axios from "../service/axios";
+import ValidationErrors from "../components/ValidationErrors";
 
 function AppRegister() {
   const [email, setEmail] = useState("");
@@ -23,24 +24,26 @@ function AppRegister() {
       username,
       password,
     };
-    dispatch(registerStart());
+    dispatch(authStart());
     try {
       const response = await axios.post("/users", { user: userData });
       console.log("Registration successful:", response);
-      dispatch(registerSuccess(response.data.user));
+      dispatch(authSuccess(response.data.user));
     } catch (error) {
-      dispatch(registerFailure(error.response.data.errors));
+      dispatch(authFailure(error.response.data.errors));
     }
   };
 
   return (
-    <main className="form-signin w-100 min-vh-100 d-flex align-items-center justify-content-center">
+    <main className="form-signin w-100 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+      <ValidationErrors />
       <form
         onSubmit={handleRegister}
         className=" bg-white border rounded-3 shadow-sm w-100 "
         style={{ maxWidth: "330px", padding: "15px" }}
       >
         <h4 className="h4 mb-4 fw-semibold text-center">Ro'yxatdan o'tish</h4>
+
         <MyInput
           state={email}
           setState={setEmail}

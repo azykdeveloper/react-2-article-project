@@ -1,8 +1,9 @@
 import { useState } from "react";
 import MyInput from "../components/ui/MyInput";
 import { useDispatch, useSelector } from "react-redux";
-import { registerFailure, registerStart, registerSuccess } from "../slice/auth";
 import axios from "../service/axios";
+import ValidationErrors from "../components/ValidationErrors";
+import { authFailure, authStart, authSuccess } from "../slice/auth";
 
 function AppLogin() {
   const [email, setEmail] = useState("");
@@ -23,18 +24,19 @@ function AppLogin() {
       password,
     };
     
-    dispatch(registerStart())
+    dispatch(authStart())
     try {
       const response = await axios.post("/users/login", { user: userData });
       console.log("Login successful:", response);
-      dispatch(registerSuccess(response.data.user));
+      dispatch(authSuccess(response.data.user));
     } catch (error) {
-      dispatch(registerFailure(error.response.data.errors));
+      dispatch(authFailure(error.response.data.errors));
       console.error("Login failed:", error);
     }
   };
   return (
-    <main className="form-signin w-100 min-vh-100 d-flex align-items-center justify-content-center">
+    <main className="form-signin w-100 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+      <ValidationErrors />
       <form
         onSubmit={handleLogin}
         className=" bg-white border rounded-3 shadow-sm w-100 "
