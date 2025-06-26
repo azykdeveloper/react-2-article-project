@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyInput from "../components/ui/MyInput";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../service/axios";
 import ValidationErrors from "../components/ValidationErrors";
 import { authFailure, authStart, authSuccess } from "../slice/auth";
+import { useNavigate } from "react-router";
 
 function AppLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
 
   const handleLogin = async (e) => {
@@ -29,11 +31,19 @@ function AppLogin() {
       const response = await axios.post("/users/login", { user: userData });
       console.log("Login successful:", response);
       dispatch(authSuccess(response.data.user));
+      navigate("/"); // Redirect to home page after successful login
     } catch (error) {
       dispatch(authFailure(error.response.data.errors));
       console.error("Login failed:", error);
     }
   };
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      navigate("/"); // Redirect to home page if already authenticated
+    }
+  }, [auth.isAuthenticated, navigate]);
+
   return (
     <main className="form-signin w-100 min-vh-100 d-flex flex-column align-items-center justify-content-center">
       <ValidationErrors />

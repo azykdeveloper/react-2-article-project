@@ -3,8 +3,27 @@ import AppHome from "./pages/AppHome";
 import AppLogin from "./pages/AppLogin";
 import AppRegister from "./pages/AppRegister";
 import AppNavbar from "./components/AppNavbar";
+import { useEffect } from "react";
+import axios from "./service/axios";
+import { useDispatch } from "react-redux";
+import { authSuccess } from "./slice/auth";
 
 function App() {
+  const dispatch = useDispatch();
+  const getUser = async () => {
+    try {
+      const response = await axios.get("/user");
+      console.log("User data:", response.data);
+      dispatch(authSuccess(response.data.user));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
   return (
     <main style={{ backgroundColor: "#f8f9fa" }}>
       <AppNavbar />

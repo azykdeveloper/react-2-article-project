@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyInput from "../components/ui/MyInput";
 import { useDispatch, useSelector } from "react-redux";
 import { authFailure, authStart, authSuccess } from "../slice/auth";
 import axios from "../service/axios";
 import ValidationErrors from "../components/ValidationErrors";
+import { useNavigate } from "react-router";
 
 function AppRegister() {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ function AppRegister() {
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const auth = useSelector((state) => state.auth);
 
   const handleRegister = async (e) => {
@@ -29,10 +31,17 @@ function AppRegister() {
       const response = await axios.post("/users", { user: userData });
       console.log("Registration successful:", response);
       dispatch(authSuccess(response.data.user));
+      navigate("/"); // Redirect to home page after successful registration
     } catch (error) {
       dispatch(authFailure(error.response.data.errors));
     }
   };
+
+  useEffect(() => {
+      if (auth.isAuthenticated) {
+        navigate("/"); // Redirect to home page if already authenticated
+      }
+    }, [auth.isAuthenticated, navigate]);
 
   return (
     <main className="form-signin w-100 min-vh-100 d-flex flex-column align-items-center justify-content-center">
