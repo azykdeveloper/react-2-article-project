@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import axios from "./service/axios";
 import { useDispatch } from "react-redux";
 import { authSuccess } from "./slice/auth";
+import { getItem } from "./utils/persistanceStorage";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,8 +22,9 @@ function App() {
   };
 
   useEffect(() => {
-    getUser();
-  }, []);
+    const token = getItem("token");
+    if (token) getUser();
+  }, []);   
 
   return (
     <main style={{ backgroundColor: "#f8f9fa" }}>

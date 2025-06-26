@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setItem } from "../utils/persistanceStorage";
+import { removeItem, setItem } from "../utils/persistanceStorage";
 
 const initialState = {
   isAuthenticated: false,
@@ -35,6 +35,7 @@ const authSlice = createSlice({
       state.user = null;
       state.error = null;
       state.loading = false;
+      removeItem("token"); // Clear token from storage
     },
   },
 });

@@ -1,8 +1,17 @@
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router";
+import { logout } from "../slice/auth";
 
 function AppNavbar() {
   const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  function logoutHandler() {
+    dispatch(logout());
+    navigate("/login");
+  }
+
   return (
     <header className="z-index-3 fixed-top">
       <div className="container border-bottom py-3 ">
@@ -36,15 +45,14 @@ function AppNavbar() {
                     Yangi maqola
                   </NavLink>
                 </li>
-                {/* <li>
-                  <NavLink to={"/profile"} className="dropdown-item">
-                    Profil
-                  </NavLink>
-                </li> */}
+
                 <li>
-                  <NavLink to={"/logout"} className="dropdown-item text-danger" >
+                  <button
+                    onClick={logoutHandler}
+                    className="dropdown-item text-danger"
+                  >
                     Chiqish
-                  </NavLink>
+                  </button>
                 </li>
               </ul>
             </div>
