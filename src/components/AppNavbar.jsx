@@ -13,7 +13,14 @@ function AppNavbar() {
   }
 
   return (
-    <header className="z-index-3 fixed-top">
+    <header
+      className="z-index-3 fixed-top"
+      style={{
+        backgroundColor: "rgba(248, 249, 250, 0.5)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+      }}
+    >
       <div className="container border-bottom py-3 ">
         <div className="d-flex flex-wrap align-items-center justify-content-between">
           <NavLink
@@ -26,16 +33,16 @@ function AppNavbar() {
           </NavLink>
 
           {auth.isAuthenticated ? (
-            <div class="dropdown">
+            <div className="dropdown">
               <span
-                class="btn btn-primary dropdown-toggle"
+                className="btn btn-primary dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
                 {auth.user.username}
               </span>
-              <ul class="dropdown-menu">
+              <ul className="dropdown-menu">
                 <li>
                   <NavLink
                     to={"/new-article"}

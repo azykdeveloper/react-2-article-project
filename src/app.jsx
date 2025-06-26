@@ -8,10 +8,12 @@ import axios from "./service/axios";
 import { useDispatch } from "react-redux";
 import { authSuccess } from "./slice/auth";
 import { getItem } from "./utils/persistanceStorage";
+import { getArticlesStart, getArticlesSuccess } from "./slice/article";
 
 function App() {
   const dispatch = useDispatch();
-  const getUser = async () => {
+
+  async function getUser() {
     try {
       const response = await axios.get("/user");
       console.log("User data:", response.data);
@@ -20,10 +22,24 @@ function App() {
       console.error("Error fetching user data:", error);
     }
   };
+  async function getArticles() {
+    dispatch(getArticlesStart()); // Reset articles before fetching new ones
+    try {
+      const response = await axios.get("/articles");
+      console.log("Articles data:", response.data);
+      dispatch(getArticlesSuccess(response.data.articles));
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    }
+  }
 
   useEffect(() => {
+    // If token exists, fetch user data
     const token = getItem("token");
     if (token) getUser();
+
+    // Fetch articles on app load
+    getArticles();
   }, []);   
 
   return (
