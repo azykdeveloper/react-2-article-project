@@ -1,6 +1,8 @@
 import { useState } from "react";
 import MyInput from "../components/ui/MyInput";
 import { useDispatch, useSelector } from "react-redux";
+import { registerFailure, registerStart, registerSuccess } from "../slice/auth";
+import axios from "../service/axios";
 
 function AppLogin() {
   const [email, setEmail] = useState("");
@@ -9,14 +11,32 @@ function AppLogin() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      alert("Iltimos, barcha maydonlarni to'ldiring!");
+      return;
+    }
+    const userData = {
+      email,
+      password,
+    };
     
+    dispatch(registerStart())
+    try {
+      const response = await axios.post("/users/login", { user: userData });
+      console.log("Login successful:", response);
+      dispatch(registerSuccess(response.data.user));
+    } catch (error) {
+      dispatch(registerFailure(error.response.data.errors));
+      console.error("Login failed:", error);
+    }
   };
   return (
     <main className="form-signin w-100 min-vh-100 d-flex align-items-center justify-content-center">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleLogin}
         className=" bg-white border rounded-3 shadow-sm w-100 "
         style={{ maxWidth: "330px", padding: "15px" }}
       >
@@ -35,7 +55,12 @@ function AppLogin() {
           placeholder={"Parol"}
         />
 
-        <button disabled={auth.loading} className="btn btn-primary w-100 py-2" type="submit" style={{ cursor: auth.loading ? "wait" : "pointer" }}>
+        <button
+          disabled={auth.loading}
+          className="btn btn-primary w-100 py-2"
+          type="submit"
+          style={{ cursor: auth.loading ? "wait" : "pointer" }}
+        >
           {auth.loading ? "Kirish..." : "Kirish"}
         </button>
       </form>

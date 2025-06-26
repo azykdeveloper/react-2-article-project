@@ -6,7 +6,7 @@ import AppNavbar from "./components/AppNavbar";
 
 function App() {
   return (
-    <main style={{ background: "#f6f6f6b5" }}>
+    <main style={{ backgroundColor: "#f8f9fa" }}>
       <AppNavbar />
 
       <div className="container">
