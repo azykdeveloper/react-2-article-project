@@ -2,9 +2,10 @@ import { Route, Routes } from "react-router";
 import AppHome from "./pages/AppHome";
 import AppLogin from "./pages/AppLogin";
 import AppRegister from "./pages/AppRegister";
+import ArticleDetail from "./pages/ArticleDetail";
 import AppNavbar from "./components/AppNavbar";
-import { useEffect } from "react";
 import axios from "./service/axios";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { authSuccess } from "./slice/auth";
 import { getItem } from "./utils/persistanceStorage";
@@ -51,6 +52,7 @@ function App() {
           <Route path="/" element={<AppHome />} />
           <Route path="/login" element={<AppLogin />} />
           <Route path="/register" element={<AppRegister />} />
+          <Route path="/article/:slug" element={<ArticleDetail />} />
         </Routes>
       </div>
     </main>

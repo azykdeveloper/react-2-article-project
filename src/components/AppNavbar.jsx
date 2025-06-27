@@ -35,7 +35,7 @@ function AppNavbar() {
           {auth.isAuthenticated ? (
             <div className="dropdown">
               <span
-                className="btn btn-primary dropdown-toggle"
+                className="btn btn-secondary dropdown-toggle"
                 type="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
