@@ -10,6 +10,8 @@ import { useDispatch } from "react-redux";
 import { authSuccess } from "./slice/auth";
 import { getItem } from "./utils/persistanceStorage";
 import { getArticlesStart, getArticlesSuccess } from "./slice/article";
+import ArticleCreate from "./pages/ArticleCreate";
+import ArticleEdit from "./pages/ArticleEdit";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,11 +37,9 @@ function App() {
   }
 
   useEffect(() => {
-    // If token exists, fetch user data
     const token = getItem("token");
     if (token) getUser();
 
-    // Fetch articles on app load
     getArticles();
   }, []);   
 
@@ -53,6 +53,8 @@ function App() {
           <Route path="/login" element={<AppLogin />} />
           <Route path="/register" element={<AppRegister />} />
           <Route path="/article/:slug" element={<ArticleDetail />} />
+          <Route path="/article/create" element={<ArticleCreate />} />
+          <Route path="/article/:slug/edit" element={<ArticleEdit />} />
         </Routes>
       </div>
     </main>

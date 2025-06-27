@@ -1,8 +1,30 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ArticleCard from "../components/ArticleCard";
+import { useNavigate } from "react-router";
+import { getArticlesStart, getArticlesSuccess } from "../slice/article";
+import { useEffect } from "react";
+import axios from "../service/axios";
 
 function AppHome() {
+  const authSlice = useSelector((state) => state.auth);
   const articleSlice = useSelector((state) => state.article);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  async function getArticles() {
+    dispatch(getArticlesStart()); // Reset articles before fetching new ones
+    try {
+      const response = await axios.get("/articles");
+      console.log("Articles data:", response.data);
+      dispatch(getArticlesSuccess(response.data.articles));
+    } catch (error) {
+      console.error("Error fetching articles:", error);
+    }
+  }
+
+  useEffect(() => {
+    getArticles();
+  }, []);
 
   return (
     <section style={{ paddingTop: "80px" }}>
@@ -12,13 +34,18 @@ function AppHome() {
           <p className="lead text-body-secondary">
             Ushbu loyiha maqolalarni yozish, o'qish va boshqarish uchun
             mo'ljallangan. Foydalanuvchilar o'z maqolalarini qo'shishlari va
-            boshqalar bilan bo'lishishlari mumkin. Loyihada Vue.js va Vuex
+            boshqalar bilan bo'lishishlari mumkin. Loyihada React.js va Redux toolkit
             texnologiyalari ishlatilgan.
           </p>
           <p>
-            <button className="btn btn-primary">
-              <i className="bi bi-feather"></i> Maqola yozish
-            </button>
+            {authSlice.isAuthenticated && (
+              <button
+                onClick={() => navigate("/article/create")}
+                className="btn btn-primary"
+              >
+                <i className="bi bi-feather"></i> Maqola yozish
+              </button>
+            )}
           </p>
         </div>
       </div>

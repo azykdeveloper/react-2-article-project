@@ -23,7 +23,7 @@ function ArticleCard({ article }) {
               
               {article.author.username === auth.user?.username && (
                 <div>
-                  <button type="button" className="btn btn-sm text-secondary">
+                  <button onClick={() => navigate(`/article/${article.slug}/edit`)} type="button" className="btn btn-sm text-secondary">
                     Edit
                   </button>
                   <button type="button" className="btn btn-sm text-danger">
