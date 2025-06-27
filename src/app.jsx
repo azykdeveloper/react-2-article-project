@@ -19,7 +19,6 @@ function App() {
   async function getUser() {
     try {
       const response = await axios.get("/user");
-      console.log("User data:", response.data);
       dispatch(authSuccess(response.data.user));
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -29,7 +28,6 @@ function App() {
     dispatch(getArticlesStart()); // Reset articles before fetching new ones
     try {
       const response = await axios.get("/articles");
-      console.log("Articles data:", response.data);
       dispatch(getArticlesSuccess(response.data.articles));
     } catch (error) {
       console.error("Error fetching articles:", error);

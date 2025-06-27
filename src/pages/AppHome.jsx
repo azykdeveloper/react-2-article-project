@@ -15,7 +15,6 @@ function AppHome() {
     dispatch(getArticlesStart()); // Reset articles before fetching new ones
     try {
       const response = await axios.get("/articles");
-      console.log("Articles data:", response.data);
       dispatch(getArticlesSuccess(response.data.articles));
     } catch (error) {
       console.error("Error fetching articles:", error);
