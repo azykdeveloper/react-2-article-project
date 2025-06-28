@@ -13,7 +13,6 @@ function ArticleDetail() {
     dispatch(getArticleStart());
     try {
       const res = await axios.get(`/articles/${slug}`);
-      console.log("Article data:", res.data);
       dispatch(getArticleSuccess(res.data.article));
     } catch (error) {
       console.error("Error fetching article:", error);

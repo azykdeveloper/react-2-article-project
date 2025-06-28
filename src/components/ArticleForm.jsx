@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 
-function ArticleForm({initialData = {}, onSubmit}) {
+function ArticleForm({initialData, onSubmit}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [body, setBody] = useState("");
 
   useEffect(() => {
-    if (initialData.title) setTitle(initialData.title);
-    if (initialData.description) setDescription(initialData.description);
-    if (initialData.body) setBody(initialData.body);
+    if (initialData) {
+      setTitle(initialData.title);
+      setDescription(initialData.description);
+      setBody(initialData.body);
+    }
   }, [initialData]);
 
   const handleSubmit = (e) => {
