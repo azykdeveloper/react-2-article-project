@@ -1,12 +1,23 @@
-# React + Vite
+[![Screenshot-2025-05-29-163104.png](https://i.postimg.cc/bNfgbDfp/Screenshot-2025-05-29-163104.png)](https://postimg.cc/9z1yHffn)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Article Project ([demo](https://react-2-article-project.vercel.app/))
 
-Currently, two official plugins are available:
+A simple React project that displays articles in a clean and responsive layout.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Tech Stack
 
-## Expanding the ESLint configuration
+- React
+- Vite
+- Redux toolkit
+- Axios
+- HTML5 & CSS3
+- JavaScript
+-  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Setup
+
+```bash
+git clone https://github.com/azykdeveloper/vue-2-article-project.git
+cd vue-#2-article-project
+npm install
+npm run dev
